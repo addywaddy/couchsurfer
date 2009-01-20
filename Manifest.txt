@@ -1,15 +1,13 @@
 History.txt
 Manifest.txt
 PostInstall.txt
+README.markdown
 README.rdoc
 Rakefile
 lib/couch_surfer.rb
 lib/couch_surfer/associations.rb
 lib/couch_surfer/model.rb
 lib/couch_surfer/validations.rb
-script/console
-script/destroy
-script/generate
 spec/fixtures/attachments/README
 spec/fixtures/attachments/couchdb.png
 spec/fixtures/attachments/test.html
