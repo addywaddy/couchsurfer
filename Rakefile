@@ -9,12 +9,13 @@ $hoe = Hoe.new('couch_surfer', CouchSurfer::VERSION) do |p|
   p.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
   p.rubyforge_name       = p.name # TODO this is default value
   p.summary              = "An ORM for CouchDB"
-  #p.extra_deps         = [
-  #   ['activesupport','>= 2.0.2'],
-  # ]
-  p.extra_dev_deps = [
-    ['newgem', ">= #{::Newgem::VERSION}"],
+  p.url                  = "http://github.com/addywaddy/couchsurfer"
+  
+  p.extra_deps         = [
     ['jchris-couchrest', ">= 0.12.2"]
+  ]
+  p.extra_dev_deps = [
+    ['newgem', ">= #{::Newgem::VERSION}"]
   ]
   
   p.clean_globs |= %w[**/.DS_Store tmp *.log]
