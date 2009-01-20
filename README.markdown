@@ -13,7 +13,7 @@ Features
   - `belongs_to`
 
 - Validations
-  - All validations from the [Validatable](http://github.com/jrun/validatable/ "CouchRest") gem
+  - All validations from the [Validatable](http://github.com/jrun/validatable/ "Validatable") gem
   - `validates_uniqueness_of`
 
 Examples
