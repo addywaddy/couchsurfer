@@ -1,7 +1,7 @@
 =CouchSurfer
 
 ==Description
-CouchSurfer is an extraction of CouchRest::Model from the excellent [http://github.com/jchris/couchrest|CouchRest] gem by J. Chris Anderson.
+CouchSurfer is an extraction of CouchRest::Model from the excellent {CouchRest}[http://github.com/jchris/couchrest] gem by J. Chris Anderson.
 
 ==Features
 - ORM (Extracted from CouchRest::Model)
@@ -10,7 +10,7 @@ CouchSurfer is an extraction of CouchRest::Model from the excellent [http://gith
   - `belongs_to`
 
 - Validations
-  - All validations from the [http://github.com/jrun/validatable|Validatable] gem
+  - All validations from the {Validatable}[http://github.com/jrun/validatable] gem
   - `validates_uniqueness_of`
 
 ==Examples
