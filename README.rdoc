@@ -1,12 +1,9 @@
-CouchSurfer
-===========
+=CouchSurfer
 
-Description
------------
+==Description
 CouchSurfer is an extraction of CouchRest::Model from the excellent [CouchRest](http://github.com/jchris/couchrest/ "CouchRest") gem by J. Chris Anderson.
 
-Features
---------
+==Features
 - ORM (Extracted from CouchRest::Model)
 - Associations
   - `has_ many`
@@ -16,8 +13,7 @@ Features
   - All validations from the [Validatable](http://github.com/jrun/validatable/ "CouchRest") gem
   - `validates_uniqueness_of`
 
-Examples
---------
+==Examples
     class Account
       include CouchSurfer::Model
       include CouchSurfer::Associations
@@ -72,8 +68,7 @@ Examples
     
 Please check out the specs as well :)
 
-License
--------
+==License
 
 (The MIT License)
 
