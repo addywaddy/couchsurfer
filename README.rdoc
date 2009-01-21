@@ -57,7 +57,7 @@ CouchSurfer is an extraction of CouchRest::Model from the excellent {CouchRest}[
         :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
       validates_length_of :postcode, :is => 7, :message => "not the correct length"
       
-      # Will use the Emplyee.by_name view with {:key => employee_instance.name}
+      # Will use the Employee.by_name view with {:key => employee_instance.name}
       validates_uniqueness_of :name, :message => "No two Beatles have the same name"
       
       # Uses a custom view and key
