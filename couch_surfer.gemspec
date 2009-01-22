@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.date = %q{2009-01-22}
   s.description = %q{CouchSurfer provides an ORM for CouchDB, as well as supporting association and validation declarations.}
   s.email = %q{jchris@apache.org}
-  s.extra_rdoc_files = ["README.md", "LICENSE", "THANKS.md"]
-  s.files = ["LICENSE", "README.md", "Rakefile", "THANKS.md", "lib/couch_surfer", "lib/couch_surfer/associations.rb", "lib/couch_surfer/model.rb", "lib/couch_surfer/validations.rb", "lib/couch_surfer.rb", "spec/fixtures", "spec/fixtures/attachments", "spec/fixtures/attachments/couchdb.png", "spec/fixtures/attachments/README", "spec/fixtures/attachments/test.html", "spec/fixtures/views", "spec/fixtures/views/lib.js", "spec/fixtures/views/test_view", "spec/fixtures/views/test_view/lib.js", "spec/fixtures/views/test_view/only-map.js", "spec/fixtures/views/test_view/test-map.js", "spec/fixtures/views/test_view/test-reduce.js", "spec/lib", "spec/lib/associations_spec.rb", "spec/lib/model_spec.rb", "spec/lib/validations_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
+  s.extra_rdoc_files = ["README.md", "LICENSE"]
+  s.files = ["LICENSE", "README.md", "Rakefile", "lib/couch_surfer", "lib/couch_surfer/associations.rb", "lib/couch_surfer/model.rb", "lib/couch_surfer/validations.rb", "lib/couch_surfer.rb", "spec/fixtures", "spec/fixtures/attachments", "spec/fixtures/attachments/couchdb.png", "spec/fixtures/attachments/README", "spec/fixtures/attachments/test.html", "spec/fixtures/views", "spec/fixtures/views/lib.js", "spec/fixtures/views/test_view", "spec/fixtures/views/test_view/lib.js", "spec/fixtures/views/test_view/only-map.js", "spec/fixtures/views/test_view/test-map.js", "spec/fixtures/views/test_view/test-reduce.js", "spec/lib", "spec/lib/associations_spec.rb", "spec/lib/model_spec.rb", "spec/lib/validations_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/addywaddy/couchsurfer}
   s.require_paths = ["lib"]

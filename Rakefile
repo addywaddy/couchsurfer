@@ -24,10 +24,10 @@ spec = Gem::Specification.new do |s|
   s.description = "CouchSurfer provides an ORM for CouchDB, as well as supporting association and validation declarations."
   s.has_rdoc = true
   s.authors = ["Adam Groves"]
-  s.files = %w( LICENSE README.md Rakefile THANKS.md ) + 
+  s.files = %w( LICENSE README.md Rakefile ) + 
     Dir["{lib,spec}/**/*"] - 
     Dir["spec/tmp"]
-  s.extra_rdoc_files = %w( README.md LICENSE THANKS.md )
+  s.extra_rdoc_files = %w( README.md LICENSE )
   s.require_path = "lib"
   s.add_dependency("json", ">= 1.1.2")
   s.add_dependency("rest-client", ">= 0.5")
