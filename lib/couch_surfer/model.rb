@@ -143,13 +143,21 @@ module CouchSurfer
       end
       
       # Automatically set <tt>updated_at</tt> and <tt>created_at</tt> fields
-      # on the document whenever saving occurs. CouchRest uses a pretty
-      # decent time format by default. See Time#to_json
+      # on the document whenever saving occurs. Save in a format parseable by Time
+      # and including milliseconds
+      
       def timestamps!
-        before(:save) do
-          self['updated_at'] = Time.now
-          self['created_at'] = self['updated_at'] if new_document?
+        %w(updated_at created_at).each do |method|
+          define_method method do
+            Time.parse(@attributes[method])
+          end
         end
+        before(:save) do
+          time = Time.now
+          usec = time.usec
+          self['updated_at'] = time.strftime("%Y/%m/%d %H:%M:%S.#{time.usec} %z")
+          self['created_at'] = self['updated_at'] if new_document?
+        end                  
       end
       
       # Name a method that will be called before the document is first saved,
@@ -613,7 +621,7 @@ module CouchSurfer
         end
         
         include ::Extlib::Hook
-        register_instance_hooks :save, :create, :destroy
+        register_instance_hooks :save, :create, :update, :destroy
       end
     end
   end

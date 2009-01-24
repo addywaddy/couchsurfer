@@ -43,7 +43,7 @@ class Article
       }"  
 
   key_writer :date
-  key_reader :slug, :created_at, :updated_at
+  key_reader :slug #, :created_at, :updated_at
   key_accessor :title, :tags
 
   timestamps!
@@ -536,6 +536,16 @@ describe CouchSurfer::Model do
     it "should set the time on update" do
       @art.save
       @art.created_at.should < @art.updated_at
+    end
+    
+    it "should return both created_at and updated_at as instances of Time" do
+      @art.created_at.should be_kind_of(Time)
+      @art.updated_at.should be_kind_of(Time)
+    end
+    it "when retrieved should return both created_at and updated_at as instances of Time" do
+      foundart = Article.get @art.id
+      foundart.created_at.should be_kind_of(Time)
+      foundart.updated_at.should be_kind_of(Time)
     end
   end
   
