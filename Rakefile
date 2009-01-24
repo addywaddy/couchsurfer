@@ -27,10 +27,10 @@ spec = Gem::Specification.new do |s|
   s.files = %w( LICENSE README.md Rakefile ) + 
     Dir["{lib,spec}/**/*"] - 
     Dir["spec/tmp"]
-  s.extra_rdoc_files = %w( README.md LICENSE )
+  s.extra_rdoc_files = %w( README.md LICENSE CHANGELOG.md )
   s.require_path = "lib"
   s.add_dependency("json", ">= 1.1.2")
-  s.add_dependency("rest-client", ">= 0.5")
+  s.add_dependency("rest-client", ">= 0.8.2")
   s.add_dependency('jchris-couchrest', ">= 0.12.2")
 end
 
