@@ -534,6 +534,7 @@ describe CouchSurfer::Model do
       foundart.created_at.should == foundart.updated_at
     end
     it "should set the time on update" do
+      sleep 1 # HACK!! Sometimes takes less than a second to call save the second time. Really should mock this!
       @art.save
       @art.created_at.should < @art.updated_at
     end

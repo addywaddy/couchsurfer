@@ -15,6 +15,15 @@ module CouchSurfer
       @database = db
     end
     
+    # Adapted from ActiveSupport Time#formatted_offset
+    def self.format_utc_offset(time)
+      seconds_offset_from_utc = time.utc_offset
+      sign = (seconds_offset_from_utc < 0 ? -1 : 1)
+      hours = seconds_offset_from_utc.abs / 3600
+      minutes = (seconds_offset_from_utc.abs % 3600) / 60
+      "%+03d%02d" % [ hours * sign, minutes ]
+    end
+    
     module ClassMethods
       # override the CouchSurfer::Model-wide default_database
       def use_database db
@@ -154,8 +163,8 @@ module CouchSurfer
         end
         before(:save) do
           time = Time.now
-          usec = time.usec
-          self['updated_at'] = time.strftime("%Y/%m/%d %H:%M:%S.#{time.usec} %z")
+          utc_offset = CouchSurfer::Model.format_utc_offset(time)
+          self['updated_at'] = time.strftime("%Y/%m/%d %H:%M:%S.#{time.usec} #{utc_offset}")
           self['created_at'] = self['updated_at'] if new_document?
         end                  
       end
@@ -290,7 +299,7 @@ module CouchSurfer
       # Deletes any non-current design docs that were created by this class. 
       # Running this when you're deployed version of your application is steadily 
       # and consistently using the latest code, is the way to clear out old design 
-      # docs. Running it to early could mean that live code has to regenerate
+      # docs. Running it too early could mean that live code has to regenerate
       # potentially large indexes.
       def cleanup_design_docs!
         ddocs = all_design_doc_versions
@@ -385,6 +394,7 @@ module CouchSurfer
         end
         self.design_doc_fresh = true
       end
+    
     end
 
     module InstanceMethods
