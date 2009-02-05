@@ -1,40 +1,56 @@
 require 'rubygems'
 require 'extlib'
-
+module CouchSurfer
+  class InlineCollection < Array
+    def << child
+      child = child.kind_of?( CouchSurfer::Model) ? child.attributes : child
+      super(child)
+    end
+    
+    def delete(child)
+      child = child.kind_of?( CouchSurfer::Model) ? child.attributes : child
+      super(child)
+    end
+  end
+end
 module CouchSurfer
   module Associations
     module ClassMethods
       def has_many *args
-        options = args.last.is_a?(Hash) ? args.pop : {}
+        options = extract_options!(args)
         children = args.first
-        define_method children do |*args|
-          query_params = args.last.is_a?(Hash) ? args.pop : nil
+        if options[:inline]
           name =  ::Extlib::Inflection.camelize(children.to_s.singular)
-          klass = ::Extlib::Inflection.constantize(name)
-          if options[:view].is_a?(Hash)
-            view_name = options[:view][:name]
-            query     = options[:view][:query].is_a?(Proc) ? self.instance_eval(&options[:view][:query]) : nil
+          cast children, :as => [name]
+          before(:save) do
+            if self[children.to_s]
+              self[children.to_s].map!{|child| child.kind_of?( CouchSurfer::Model) ? child.attributes : child}
+            end
           end
-          view_name ||= "by_#{self.class.name.downcase}_id"
-          query ||= {:key => self.id}
-          klass.send(view_name, query)
+          define_method children do |*args|
+            self[children.to_s] ||= CouchSurfer::InlineCollection.new
+          end
+          return
         end
+        if options[:through]
+          define_method_for_children(options[:through], options)
+          define_method children do
+            name = options[:class_name] || children.to_s.singular
+            class_name =  ::Extlib::Inflection.camelize(name)
+            klass = ::Extlib::Inflection.constantize(class_name)
+            through_items = self.send("#{options[:through]}")
+            query ||= {:keys => through_items.map{|child| child.send("#{name}_id")}}
+            view_name ||= "by_#{self.class.name.downcase}_id"
+            klass.send("all", query)
+          end
+          return
+        end
+        define_method_for_children(children, options, options[:class_name])
       end
       
       def belongs_to *args
-        options = args.last.is_a?(Hash) ? args.pop : {}
+        options = extract_options!(args)
         parent = args.first
-        # view_key = "#{parent}_id".to_sym
-        # if options[:identifiers]
-        #   if options[:prepend]
-        #     view_key = options[:identifiers] << view_key
-        #   else 
-        #     view_key = options[:identifiers].unshift(view_key)
-        #   end
-        # end
-        # class_eval do
-        #   view_by *view_key
-        # end
         define_method parent do
           name = ::Extlib::Inflection.camelize(parent.to_s)
           klass = ::Extlib::Inflection.constantize(name)
@@ -46,6 +62,28 @@ module CouchSurfer
 
         define_method "#{parent}=".to_sym do |parent_obj|
           self["#{parent_obj.class.name.downcase}_id"] = parent_obj.id
+        end
+      end
+      
+      private
+      
+      def extract_options!(args)
+        args.last.is_a?(Hash) ? args.pop : {}
+      end
+      
+      def define_method_for_children(children, options, name = nil)
+        class_name =  ::Extlib::Inflection.camelize(name || children.to_s.singular)
+        define_method children do
+          klass = ::Extlib::Inflection.constantize(class_name)
+          if options[:view]
+            view_name = options[:view]
+          end
+          if options[:query].is_a?(Proc)
+             query = self.instance_eval(&options[:query])
+          end
+          view_name ||= "by_#{self.class.name.downcase}_id"
+          query ||= {:key => self.id}
+          klass.send(view_name, query)
         end
       end
     end
