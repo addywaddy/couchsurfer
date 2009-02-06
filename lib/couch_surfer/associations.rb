@@ -35,7 +35,7 @@ module CouchSurfer
         if options[:through]
           define_method_for_children(options[:through], options)
           define_method children do
-            name = options[:class_name] || children.to_s.singular
+            name = (options[:class_name] || children).to_s.singular
             class_name =  ::Extlib::Inflection.camelize(name)
             klass = ::Extlib::Inflection.constantize(class_name)
             through_items = self.send("#{options[:through]}")
@@ -51,12 +51,13 @@ module CouchSurfer
       def belongs_to *args
         options = extract_options!(args)
         parent = args.first
+        parent_name = (options[:class_name] || parent).to_s
         define_method parent do
-          name = ::Extlib::Inflection.camelize(parent.to_s)
-          klass = ::Extlib::Inflection.constantize(name)
-          parent_id = self["#{parent.to_s}_id"]
+          class_name = ::Extlib::Inflection.camelize(parent_name)
+          klass = ::Extlib::Inflection.constantize(class_name)
+          parent_id = self["#{parent_name}_id"]
           if parent_id
-            klass.send(:get, self["#{parent.to_s}_id"])
+            klass.send(:get, self["#{parent_name}_id"])
           end
         end
 

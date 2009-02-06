@@ -50,7 +50,7 @@ class Employee
   
   key_accessor :email, :account_id, :role
   
-  belongs_to :account
+  belongs_to :employer, :class_name => :account
   has_many :shirts, :inline => true
   has_many :projects, :through => :memberships
   
@@ -82,8 +82,11 @@ describe CouchSurfer::Associations do
   
   describe "belongs_to" do
     it "should return it's parent" do
-      @employee = @account.employees.first
-      @employee.account.should == @account
+      @project.account.should == @account
+    end
+    
+    it "should take the class_name into consideration" do
+      @employee.employer.should == @account
     end
   end
   

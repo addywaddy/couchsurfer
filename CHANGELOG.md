@@ -1,3 +1,7 @@
+0.0.5 (2009-02-06)
+------------------
+ - BUGFIX: `belongs_to` now takes `:class_name` (see Employer class in Association spec)
+
 0.0.4 (2009-02-04)
 ------------------
  - `has_many :through`
