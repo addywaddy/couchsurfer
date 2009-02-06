@@ -15,7 +15,7 @@ class User
   validates_format_of   :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates_length_of   :postcode, :is => 7, :message => "not the correct length"
   validates_uniqueness_of :name, :message => "No two Beatles have the same name"
-  validates_uniqueness_of :email, :view => {:name => :by_account_id_and_email, :query => lambda{ {:key => [account_id, email]} }}, :message => "Already taken!"
+  validates_uniqueness_of :email, :view => :by_account_id_and_email, :query => lambda{ {:key => [account_id, email]} }, :message => "Already taken!"
 end
 
 

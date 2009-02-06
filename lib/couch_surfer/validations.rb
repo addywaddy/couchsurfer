@@ -18,9 +18,9 @@ module CouchSurfer
     
     module InstanceMethods
       def is_unique?(field, options)
-        if options[:view].is_a?(Hash)
-          view_name = options[:view][:name]
-          query     = options[:view][:query].is_a?(Proc) ? self.instance_eval(&options[:view][:query]) : nil
+        if options[:view]
+          view_name = options[:view]
+          query     = options[:query].is_a?(Proc) ? self.instance_eval(&options[:query]) : nil
         end
         view_name ||= "by_#{field}"
         query ||= {:key => self.send(field)}
