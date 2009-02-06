@@ -4,6 +4,10 @@
  - `has_many :inline`
  - `create` was in 0.0.2 but forgot to mention it :)
  - `all` now emits (id, null) so you can use `:keys => [1,2,3,4]` in your query
+ - `format_utc_offset` helper (zdzolton)
+ - Syntax change: 
+   - OLD: `:view => {:name => :by_this_and_that, :query => lambda { {:key => [this_id, id]} }}`
+   - NEW: `:view => :by_this_and_that, :query => lambda { {:key => [this_id, id]} }`
 
 0.0.2 (2009-01-24)
 ------------------
