@@ -126,7 +126,6 @@ module CouchSurfer
         keys.each do |method|
           key = method.to_s
           define_method "#{method}=" do |value|
-            #puts "#@attributes['#{method}'] = #{value}"
             @attributes[method] = value# ||= nil
           end
         end
@@ -531,6 +530,9 @@ module CouchSurfer
         "#{database.root}/#{self.id}/#{attachment_name}"
       end
       
+      def to_json
+        attributes.to_json
+      end
       
       protected
       
@@ -579,7 +581,7 @@ module CouchSurfer
             end
           else
             self[k] = if (!v[:send] && target == 'Time') 
-              Time.parse(self[k])
+              self[k].is_a?(Time) ? self[k] : Time.parse(self[k])
             else
               ::Extlib::Inflection.constantize(target).send((v[:send] || 'new'), self[k])
             end

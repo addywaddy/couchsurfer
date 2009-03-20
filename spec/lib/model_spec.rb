@@ -99,7 +99,7 @@ class Event
   
   key_accessor :subject, :occurs_at
 
-  cast :occurs_at, :as => 'Time', :send => 'parse'
+  cast :occurs_at, :as => 'Time'
 end
 
 describe CouchSurfer::Model do
@@ -344,12 +344,14 @@ describe CouchSurfer::Model do
   
   describe "cast keys to any type" do
     before(:all) do
-      event_doc = { :subject => "Some event", :occurs_at => Time.now }
-      e = Event.database.save event_doc
-
-      @event = Event.get e['id']
+      @event = Event.create(:subject => "Some event", :occurs_at => Time.now)
     end
     it "should cast created_at to Time" do
+      @event.occurs_at.should be_an_instance_of(Time)
+    end
+    
+    it "should cast created_at to Time after instantiating" do
+      @event = Event.get(@event.id)
       @event.occurs_at.should be_an_instance_of(Time)
     end
   end
@@ -722,8 +724,6 @@ describe CouchSurfer::Model do
       Article.by_updated_at
       newdocs = Article.database.documents :startkey => "_design/", 
         :endkey => "_design/\u9999"
-      # puts @design_docs.inspect
-      # puts newdocs.inspect
       newdocs["rows"].length.should == @design_docs["rows"].length + 1
     end
   end
@@ -888,6 +888,13 @@ describe CouchSurfer::Model do
     
     it 'should return the attachment URL as specified by CouchDB HttpDocumentApi' do
       @obj.attachment_url(@attachment_name).should == "#{Basic.database}/#{@obj.id}/#{@attachment_name}"
+    end
+  end
+  
+  describe "#to_json" do
+    it "should return the a JSON representation of the attributes hash" do
+      article = Article.new(:title => "My Article")
+      article.to_json.should == "{\"title\":\"My Article\",\"couchrest-type\":\"Article\"}"
     end
   end
 end
