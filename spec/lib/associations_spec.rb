@@ -55,14 +55,18 @@ class Employee
   has_many :projects, :through => :memberships
   
   view_by :account_id, :role
-  
 end
 
 class Shirt
   include CouchSurfer::Model
   include CouchSurfer::Associations
   
-  key_accessor :color
+  key_accessor :color, :bought_on
+  cast :bought_on, :as => "Time"
+  
+  def change_color(new_color)
+    self.color = new_color
+  end
 end
 
 describe CouchSurfer::Associations do
@@ -106,10 +110,10 @@ describe CouchSurfer::Associations do
     describe ":inline" do
       before(:all) do
         @employee.shirts.clear
-        @blue_shirt = Shirt.create(:color => "White")
-        @pink_shirt = Shirt.create(:color => "Pink")
+        @white_shirt = Shirt.new(:color => "White")
+        @pink_shirt = Shirt.new(:color => "Pink")
         @employee.shirts << {:color => "Blue"}
-        @employee.shirts << @blue_shirt
+        @employee.shirts << @white_shirt
         @employee.save
         @employee = Employee.get(@employee.id)
         @employee.shirts << @pink_shirt
@@ -123,7 +127,7 @@ describe CouchSurfer::Associations do
         employee.shirts.map{|shirt| shirt.color}.should == %w(Blue White Pink)
       end
 
-      it "should have a delete method" do
+      it "should be able to delete a child" do
         employee = Employee.get(@employee.id)
         employee.shirts.delete(@pink_shirt)
         employee.save
@@ -137,6 +141,22 @@ describe CouchSurfer::Associations do
         employee.save
         employee = Employee.get(@employee.id)
         employee.shirts.map{|shirt| shirt.color}.should == %w(Blue White Black)
+      end
+      
+      it "should cast the childrens methods appropriately" do
+        employee = Employee.new(:email => "foofoo@bar.com", :account_id => @account.id, :role => "Programmer")
+        employee.save
+        employee.shirts << Shirt.new(:color => "Mauve", :bought_on => Time.now)
+        employee.shirts.last.bought_on.should be_an_instance_of(Time)
+        employee.shirts.last.color.should == "Mauve"
+        # Save ..
+        employee.save
+        employee.shirts.last.bought_on.should be_an_instance_of(Time)
+        employee.shirts.last.color.should == "Mauve"
+        # Reload ..
+        employee = Employee.get(employee.id)
+        employee.shirts.last.bought_on.should be_an_instance_of(Time)
+        employee.shirts.last.color.should == "Mauve"
       end
 
     end

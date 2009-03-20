@@ -1,19 +1,6 @@
 require 'rubygems'
 require 'extlib'
 module CouchSurfer
-  class InlineCollection < Array
-    def << child
-      child = child.kind_of?( CouchSurfer::Model) ? child.attributes : child
-      super(child)
-    end
-    
-    def delete(child)
-      child = child.kind_of?( CouchSurfer::Model) ? child.attributes : child
-      super(child)
-    end
-  end
-end
-module CouchSurfer
   module Associations
     module ClassMethods
       def has_many *args
@@ -22,13 +9,15 @@ module CouchSurfer
         if options[:inline]
           name =  ::Extlib::Inflection.camelize(children.to_s.singular)
           cast children, :as => [name]
-          before(:save) do
-            if self[children.to_s]
-              self[children.to_s].map!{|child| child.kind_of?( CouchSurfer::Model) ? child.attributes : child}
-            end
-          end
           define_method children do |*args|
-            self[children.to_s] ||= CouchSurfer::InlineCollection.new
+            kinder = self[children.to_s]
+            klass = ::Extlib::Inflection.constantize(name)
+            if kinder.kind_of?(Array)
+              self[children.to_s] =  kinder.map{|c| klass.send(:new, c)} unless kinder.first.kind_of?(klass)
+            else
+              self[children.to_s] = []
+            end
+            self[children.to_s]
           end
           return
         end
