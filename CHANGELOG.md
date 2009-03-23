@@ -1,3 +1,6 @@
+0.1.0 (2009-03-23)
+ - `inline` associations are now correctly serialised when saving
+
 0.0.5 (2009-02-06)
 ------------------
  - BUGFIX: `belongs_to` now takes `:class_name` (see Employer class in Association spec)

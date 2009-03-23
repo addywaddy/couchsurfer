@@ -66,8 +66,29 @@ The `belongs_to` associations accept two additional options - `:view` and `query
     account = Acccount.create(…)
     10.times {User.create(…, :account_id => acount.id)}
     account.employees
+
+
+**Example 3: :inline**
+
+    class User
+      …
+      has_many :tasks, :inline => true
+      …
+    end
+
+    class Task
+      …
+      view_by :user_id
+      …
+    end
+
+    user = User.create(…)
+    10.times {user.tasks << Task.new(…)}
+    user.save
+    user.tasks
+
     
-**Example 2: :through**
+**Example 4: :through**
 
     class Account
       …
