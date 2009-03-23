@@ -1,4 +1,5 @@
 0.1.0 (2009-03-23)
+------------------
  - `inline` associations are now correctly serialised when saving
 
 0.0.5 (2009-02-06)
