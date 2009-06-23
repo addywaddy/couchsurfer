@@ -10,4 +10,5 @@ module CouchSurfer
   autoload :Model,        'couch_surfer/model'
   autoload :Validations,        'couch_surfer/validations'
   autoload :Associations,        'couch_surfer/associations'
+  autoload :Query,        'couch_surfer/query'
 end
