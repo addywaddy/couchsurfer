@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'extlib'
 require 'validatable'
 
 module CouchSurfer

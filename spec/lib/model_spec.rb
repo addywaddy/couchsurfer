@@ -22,7 +22,6 @@ end
 
 class Article
   include CouchSurfer::Model
-  #use_database CouchRest.database!('http://127.0.0.1:5984/couchrest-model-test')
   unique_id :slug
   
   view_by :date, :descending => true
@@ -266,7 +265,7 @@ describe CouchSurfer::Model do
           }
         ]
       }
-      r = Course.database.save course_doc
+      r = Course.database.save_doc course_doc
       @course = Course.get r['id']
     end
     it "should load the course" do
@@ -328,7 +327,7 @@ describe CouchSurfer::Model do
         },
         "final_test_at" => "2008/12/19 13:00:00 +0800"
       }
-      r = Course.database.save course_doc
+      r = Course.database.save_doc course_doc
       @course = Course.get r['id']
     end
     it "should load the course" do
@@ -383,7 +382,7 @@ describe CouchSurfer::Model do
     end
   end
   
-  describe "creating a model" do
+  describe "creating an instance" do
     before(:all) do
       @obj = Basic.create(:foo => "Bar")
     end
@@ -406,6 +405,11 @@ describe CouchSurfer::Model do
 
     it "should set the type" do
       @obj['couchrest-type'].should == 'Basic'
+    end
+    
+    it "should be the same as the retrieved instance" do
+      @obj = Basic.create(:foo => "Bar")
+      @obj.should == Basic.get(@obj.id)
     end
   end
   
@@ -438,7 +442,7 @@ describe CouchSurfer::Model do
     before(:each) do
       @art = Article.new
       @old = Article.database.get('this-is-the-title') rescue nil
-      Article.database.delete(@old) if @old
+      Article.database.delete_doc(@old) if @old
     end
     
     it "should be a new document" do
@@ -579,7 +583,7 @@ describe CouchSurfer::Model do
     end
     
     it "should not include non-Articles" do
-      Article.database.save({"date" => 1})
+      Article.database.save_doc({"date" => 1})
       view = Article.by_date :raw => true
       view['rows'].length.should == 4
     end
@@ -631,7 +635,7 @@ describe CouchSurfer::Model do
   
   describe "a ducktype view" do
     before(:all) do
-      @id = @db.save({:dept => true})['id']
+      @id = @db.save_doc({:dept => true})['id']
     end
     it "should setup" do
       duck = Course.get(@id) # from a different db

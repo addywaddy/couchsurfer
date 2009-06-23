@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'extlib'
 module CouchSurfer
   module Associations
     module ClassMethods

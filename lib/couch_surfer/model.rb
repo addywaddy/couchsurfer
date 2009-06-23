@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'extlib'
-require 'couchrest'
 require 'digest/md5'
 require 'mime/types'
 
@@ -304,7 +301,7 @@ module CouchSurfer
         ddocs = all_design_doc_versions
         ddocs["rows"].each do |row|
           if (row['id'] != design_doc_id)
-            database.delete({
+            database.delete_doc({
               "_id" => row['id'],
               "_rev" => row['value']['rev']
             })
@@ -382,7 +379,7 @@ module CouchSurfer
           design_doc['views'].each do |name, view|
             saved['views'][name] = view
           end
-          database.save(saved)
+          database.save_doc(saved)
           design_doc['_id'] = did
           design_doc.database = database
         else
@@ -480,7 +477,7 @@ module CouchSurfer
       # Removes the <tt>_id</tt> and <tt>_rev</tt> fields, preparing the
       # document to be saved to a new <tt>_id</tt>.
       def destroy
-        result = database.delete self
+        result = database.delete_doc self
         if result['ok']
           self['_rev'] = nil
           self['_id'] = nil
@@ -500,7 +497,7 @@ module CouchSurfer
 
       # reads the data from an attachment
       def read_attachment(attachment_name)
-        Base64.decode64(database.fetch_attachment(self.id, attachment_name))
+        Base64.decode64(database.fetch_attachment(self, attachment_name))
       end
 
       # modifies a file attachment on the current doc
@@ -547,6 +544,7 @@ module CouchSurfer
       
       def save_doc bulk = false
         @attributes.database = self.class.database
+        @attributes.delete('_rev') unless @attributes['_rev']
         @attributes.save(bulk)
       end
       
@@ -622,7 +620,6 @@ module CouchSurfer
         class_inheritable_accessor :design_doc_fresh
         
         alias :new_record? :new_document?
-        
         def initialize attrs = {}
           @attributes = CouchRest::Document.new(attrs)
           apply_defaults
