@@ -7,8 +7,10 @@ require 'couchrest'
 
 module CouchSurfer
   VERSION = '0.0.5'
-  autoload :Model,        'couch_surfer/model'
-  autoload :Validations,        'couch_surfer/validations'
-  autoload :Associations,        'couch_surfer/associations'
-  autoload :Query,        'couch_surfer/query'
+  autoload :Configuration,       'couch_surfer/configuration'
+  autoload :Database,       'couch_surfer/database'
+  autoload :Model,          'couch_surfer/model'
+  autoload :Validations,    'couch_surfer/validations'
+  autoload :Associations,   'couch_surfer/associations'
+  autoload :Query,          'couch_surfer/query'
 end
