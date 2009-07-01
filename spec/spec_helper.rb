@@ -23,8 +23,3 @@ def reset_test_db!
   db = cr.create_db(TESTDB) rescue nin
   db
 end
-
-def kick!(typhoeus_object)
-  typhoeus_object.to_s
-end
-CouchSurfer::Configuration.host = "http://localhost:5984"
