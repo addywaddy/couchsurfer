@@ -13,4 +13,5 @@ module CouchSurfer
   autoload :Validations,    'couch_surfer/validations'
   autoload :Associations,   'couch_surfer/associations'
   autoload :Query,          'couch_surfer/query'
+  autoload :Attachments,    'couch_surfer/attachments'
 end

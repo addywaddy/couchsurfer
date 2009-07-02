@@ -23,3 +23,7 @@ def reset_test_db!
   db = cr.create_db(TESTDB) rescue nin
   db
 end
+
+def open_fixture(name)
+  open(File.join( File.dirname(__FILE__), 'fixtures', name)).read
+end
