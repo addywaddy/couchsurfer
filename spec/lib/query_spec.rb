@@ -24,7 +24,7 @@ describe CouchSurfer::Query do
 
   it "should pass on the query to the '_mix' handler, and include the docs by default" do
     payload = {:design => "Person-f048e6d2ad225649c5eaa30511a1a310", :view => {:name => :by_name, :query => {:include_docs => true}}, :external =>  {:name =>  :query_person, :query =>  {:q =>  "John"}, :include_docs =>  true}}
-    CouchRest.should_receive(:post).with("http://#{Person.database}/_mix", payload.to_json).and_return({"rows"=>[{"doc"=>{"name"=>"John", "email" => "john@mail.com"}}, {"doc"=>{"name"=>"Johnson", "email" => "johnson@mail.com"}}]})
+    CouchRest.should_receive(:post).with("http://#{Person.database}/_mix", payload).and_return({"rows"=>[{"doc"=>{"name"=>"John", "email" => "john@mail.com"}}, {"doc"=>{"name"=>"Johnson", "email" => "johnson@mail.com"}}]})
     people = Person.query(:by_name, "John")
     people.size.should == 2
     people.map{|p| p.name}.sort.should == ["John", "Johnson"]
@@ -51,7 +51,7 @@ describe CouchSurfer::Query do
         :include_docs =>  true
       }
     }
-    CouchRest.should_receive(:post).with("http://#{Person.database}/_mix", payload.to_json).and_return({"rows"=>[{"doc"=>{"name"=>"John", "email" => "john@mail.com"}}, {"doc"=>{"name"=>"Johnson", "email" => "johnson@mail.com"}}]})
+    CouchRest.should_receive(:post).with("http://#{Person.database}/_mix", payload).and_return({"rows"=>[{"doc"=>{"name"=>"John", "email" => "john@mail.com"}}, {"doc"=>{"name"=>"Johnson", "email" => "johnson@mail.com"}}]})
     people = Person.query(:by_name, "John", {:limit => 5, :startkey => ["AAA", "SDFG"], :endkey => "QQQ", :descending => true})
   end
 end

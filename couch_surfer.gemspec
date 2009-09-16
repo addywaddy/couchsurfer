@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{couch_surfer}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Groves"]
-  s.date = %q{2009-07-01}
+  s.date = %q{2009-08-12}
   s.description = %q{CouchSurfer provides an ORM for CouchDB, as well as supporting association and validation declarations.}
   s.email = %q{adam.groves@gmail.com}
   s.extra_rdoc_files = [
@@ -20,9 +20,11 @@ Gem::Specification.new do |s|
      "Rakefile",
      "lib/couch_surfer.rb",
      "lib/couch_surfer/associations.rb",
+     "lib/couch_surfer/attachments.rb",
      "lib/couch_surfer/model.rb",
      "lib/couch_surfer/query.rb",
      "lib/couch_surfer/validations.rb",
+     "lib/couchrest/extensions.rb",
      "spec/fixtures/attachments/README",
      "spec/fixtures/attachments/couchdb.png",
      "spec/fixtures/attachments/test.html",
@@ -32,6 +34,8 @@ Gem::Specification.new do |s|
      "spec/fixtures/views/test_view/test-map.js",
      "spec/fixtures/views/test_view/test-reduce.js",
      "spec/lib/associations_spec.rb",
+     "spec/lib/attachments_spec.rb",
+     "spec/lib/extensions_spec.rb",
      "spec/lib/model_spec.rb",
      "spec/lib/query_spec.rb",
      "spec/lib/validations_spec.rb",
@@ -45,6 +49,8 @@ Gem::Specification.new do |s|
   s.summary = %q{ORM based on CouchRest::Model}
   s.test_files = [
     "spec/lib/associations_spec.rb",
+     "spec/lib/attachments_spec.rb",
+     "spec/lib/extensions_spec.rb",
      "spec/lib/model_spec.rb",
      "spec/lib/query_spec.rb",
      "spec/lib/validations_spec.rb",

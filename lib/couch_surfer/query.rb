@@ -10,7 +10,7 @@ module CouchSurfer
           :view => set_view_options(view_name, query_options),
           :external => set_external_options(query_string),
         }
-        result = CouchRest.post "http://#{database}/_mix", payload.to_json
+        result = CouchRest.post "http://#{database}/_mix", payload
         result['rows'].collect{|r|new(r['doc'])} if result['rows']
       end
 
