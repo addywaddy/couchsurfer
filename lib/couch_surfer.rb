@@ -7,7 +7,6 @@ require 'couchrest'
 require 'couchrest/extensions'
 
 module CouchSurfer
-  VERSION = '0.0.5'
   autoload :Extensions,    'couch_surfer/attachments'
   autoload :Configuration,       'couch_surfer/configuration'
   autoload :Database,       'couch_surfer/database'
