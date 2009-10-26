@@ -257,6 +257,10 @@ describe CouchSurfer::Model do
       foundart = Article.get @art.id
       foundart.title.should == "All About Getting"
     end
+
+    it "should raise an error if the document can't be found" do
+      lambda {Article.get("THIS DONT EXIST")}.should raise_error(CouchSurfer::RecordNotFound)
+    end
   end
 
   describe "getting a model with a subobjects array" do

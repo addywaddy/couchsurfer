@@ -2,6 +2,9 @@ require 'digest/md5'
 require 'mime/types'
 
 module CouchSurfer
+
+  class RecordNotFound < RestClient::ResourceNotFound; end
+
   module Model
     @database = nil
     def self.default_database
@@ -36,6 +39,9 @@ module CouchSurfer
       def get id
         doc = database.get id
         new(doc)
+      rescue
+        RestClient::ResourceNotFound
+        raise CouchSurfer::RecordNotFound
       end
 
       def create(attrs = {})
