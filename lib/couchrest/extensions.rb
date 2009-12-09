@@ -5,7 +5,7 @@ module CouchRest
     #/db/_design/examples/_list/index-posts/posts-by-date
     
     def list(list_name, view_name, doc_name, params = {})
-      url = CouchRest.paramify_url "#{@uri}/_design/#{doc_name}/_list/#{list_name}/#{view_name}", params
+      url = CouchRest.paramify_url "#{@root}/_design/#{doc_name}/_list/#{list_name}/#{view_name}", params
       response = RestClient.get(url)
       JSON.parse(response)
     rescue

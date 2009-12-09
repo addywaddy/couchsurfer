@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{couch_surfer}
-  s.version = "0.3.0"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Groves"]
-  s.date = %q{2009-10-26}
+  s.date = %q{2009-12-10}
   s.description = %q{CouchSurfer provides an ORM for CouchDB, as well as supporting association and validation declarations.}
   s.email = %q{adam.groves@gmail.com}
   s.extra_rdoc_files = [
@@ -67,15 +67,15 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<json>, [">= 1.1.2"])
       s.add_runtime_dependency(%q<rest-client>, [">= 0.8.2"])
-      s.add_runtime_dependency(%q<jchris-couchrest>, [">= 0.12.2"])
+      s.add_runtime_dependency(%q<couchrest>, [">= 0.33"])
     else
       s.add_dependency(%q<json>, [">= 1.1.2"])
       s.add_dependency(%q<rest-client>, [">= 0.8.2"])
-      s.add_dependency(%q<jchris-couchrest>, [">= 0.12.2"])
+      s.add_dependency(%q<couchrest>, [">= 0.33"])
     end
   else
     s.add_dependency(%q<json>, [">= 1.1.2"])
     s.add_dependency(%q<rest-client>, [">= 0.8.2"])
-    s.add_dependency(%q<jchris-couchrest>, [">= 0.12.2"])
+    s.add_dependency(%q<couchrest>, [">= 0.33"])
   end
 end

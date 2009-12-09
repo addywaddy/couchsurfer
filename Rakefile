@@ -19,7 +19,7 @@ begin
     s.require_path = "lib"
     s.add_dependency("json", ">= 1.1.2")
     s.add_dependency("rest-client", ">= 0.8.2")
-    s.add_dependency('jchris-couchrest', ">= 0.12.2")
+    s.add_dependency('couchrest', ">= 0.33")
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
