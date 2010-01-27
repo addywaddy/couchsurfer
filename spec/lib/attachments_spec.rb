@@ -24,6 +24,19 @@ describe CouchSurfer::Attachments do
       @person.put_attachment("couchdb.png", open_fixture("attachments/couchdb.png")).should be_true
     end
 
+    it "should not escape spaces" do
+      @person.put_attachment("couch db.png", open_fixture("attachments/couchdb.png")).should be_true
+      @person.reload["_attachments"].keys.should include "couch db.png"
+    end
+
+    it "should not store filenames beginning with an underscore" do
+      lambda{ @person.put_attachment("_couch db.png", open_fixture("attachments/couchdb.png")) }.should raise_error RestClient::RequestFailed
+    end
+
+    it "should not store filenames which are non-utf8" do
+      lambda{ @person.put_attachment("®#†π¶®¥π€.png", open_fixture("attachments/couchdb.png")) }.should raise_error RestClient::RequestFailed
+    end
+
     it "should raise an exception if the record is not yet saved" do
       person = Person.new(:name => "John", :email => "john@mail.com")
       lambda {person.put_attachment("couchdb.png", open_fixture("attachments/couchdb.png"))}.should raise_error(ArgumentError)

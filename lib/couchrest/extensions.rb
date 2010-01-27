@@ -3,7 +3,7 @@ module CouchRest
     # Query a CouchDB view as defined by a <tt>_design</tt> document. Accepts
     # paramaters as described in http://wiki.apache.org/couchdb/HttpViewApi
     #/db/_design/examples/_list/index-posts/posts-by-date
-    
+
     def list(list_name, view_name, doc_name, params = {})
       url = CouchRest.paramify_url "#{@root}/_design/#{doc_name}/_list/#{list_name}/#{view_name}", params
       response = RestClient.get(url)
@@ -11,6 +11,15 @@ module CouchRest
     rescue
       response
     end
+
+    # PUT an attachment directly to CouchDB
+    def put_attachment(doc, name, file, options = {})
+      docid = escape_docid(doc['_id'])
+      #name = CGI.escape(name)
+      uri = url_for_attachment(doc, name)
+      JSON.parse(HttpAbstraction.put(uri, file, options))
+    end
+
   end
 
   class Design
