@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{couch_surfer}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Groves"]
-  s.date = %q{2009-12-10}
+  s.date = %q{2010-01-27}
   s.description = %q{CouchSurfer provides an ORM for CouchDB, as well as supporting association and validation declarations.}
   s.email = %q{adam.groves@gmail.com}
   s.extra_rdoc_files = [
@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/addywaddy/couchsurfer}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.4}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{ORM based on CouchRest::Model}
   s.test_files = [
     "spec/lib/associations_spec.rb",
