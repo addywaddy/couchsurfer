@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{couch_surfer}
-  s.version = "0.3.3"
+  s.version = "0.3.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Groves"]
@@ -60,22 +60,23 @@ Gem::Specification.new do |s|
      "spec/spec_helper.rb"
   ]
 
+  dependencies = [
+    [%q<json>, ["~> 1.1.2"]],
+    [%q<rest-client>, ["~> 1.0.3"]],
+    [%q<couchrest>, ["~> 0.33"]],
+    [%q<extlib>, ["~>0.9.15"]]
+  ]
+
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<json>, [">= 1.1.2"])
-      s.add_runtime_dependency(%q<rest-client>, [">= 0.8.2"])
-      s.add_runtime_dependency(%q<couchrest>, [">= 0.33"])
+      dependencies.each{|dep| s.add_runtime_dependency(*dep)}
     else
-      s.add_dependency(%q<json>, [">= 1.1.2"])
-      s.add_dependency(%q<rest-client>, [">= 0.8.2"])
-      s.add_dependency(%q<couchrest>, [">= 0.33"])
+      dependencies.each{|dep| s.add_dependency(*dep)}
     end
   else
-    s.add_dependency(%q<json>, [">= 1.1.2"])
-    s.add_dependency(%q<rest-client>, [">= 0.8.2"])
-    s.add_dependency(%q<couchrest>, [">= 0.33"])
+    dependencies.each{|dep| s.add_dependency(*dep)}
   end
 end
